@@ -1,12 +1,36 @@
-# employee-sql-project
-End-to-end SQL project analyzing employee and salary data. Covers data extraction, transformation, and insights using joins, aggregations, and advanced SQL queries.
+# 📊 Employee Analytics SQL Project
 
-# 📈 Insights from Employee Data
-- IT department has highest number of employees
-- Duplicate employee names found (data quality issue)
-- Some salaries are repeated across employees
-- Average salary varies significantly by department
-- Senior roles have higher salary distribution
+## 📌 Overview
+This project contains a sample company database designed for SQL practice and data analysis.
 
-## 📌 Conclusion
-This dataset helps understand employee distribution, salary patterns, and data anomalies.
+## 🧩 Database Includes
+- Employees
+- Departments
+- Salaries
+- Titles
+- Department Mapping
+
+## 🎯 Skills Demonstrated
+- SQL Joins
+- Aggregations (AVG, COUNT, MAX)
+- Subqueries
+- Data Analysis Queries
+
+## 🛠 Tools Used
+- MySQL
+
+## 📈 Key Analysis
+- Highest salary employees
+- Duplicate records detection
+- Department-wise salary analysis
+- Employee distribution
+
+## 🚀 How to Run
+1. Run `schema.sql`
+2. Run `data.sql`
+3. Run queries from `queries.sql`
+
+---
+
+## 📬 Author
+Shambha Sawant
