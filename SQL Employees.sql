@@ -140,24 +140,75 @@ INSERT INTO dept_emp VALUES
 (120, 2);
 
 -- 1. Get all employees with their department names
+SELECT e.name, d.dept_name
+FROM employees as e
+INNER JOIN dept_emp as de
+ON e.emp_id = de.emp_id
+INNER JOIN departments as d on de.dept_id = d.dept_id;
 
 -- 2. Find total number of employees in each department
+SELECT d.dept_name, COUNT(e.emp_id) as Total_Employees
+FROM employees as e
+INNER JOIN dept_emp as de
+ON e.emp_id = de.emp_id
+INNER JOIN departments as d 
+ON de.dept_id = d.dept_id
+GROUP BY d.dept_name;
 
 -- 3. Find the highest salary in the company
+SELECT MAX(salary) FROM salaries;
 
 -- 4. Find the second highest salary
+SELECT MAX(salary) FROM salaries
+WHERE salary < (SELECT MAX(salary) FROM salaries);
 
 -- 5. Find all employees earning more than average salary
+SELECT e.name, s.salary
+FROM employees as e
+INNER JOIN salaries as s
+on e.emp_id = s.emp_id
+where salary > (SELECT AVG(salary) FROM salaries);
 
 -- 6. Get employee name and salary in descending order
+SELECT e.name, s.salary
+FROM employees as e
+INNER JOIN salaries as s
+ON e.emp_id = s.emp_id
+ORDER BY salary DESC;
 
 -- 7. Count total number of employees
+SELECT COUNT(emp_id) as Total_Employees 
+FROM employees;
 
 -- 8. Find duplicate employee names
+SELECT name, count(name)
+FROM employees
+GROUP BY name
+HAVING count(name) > 1;
 
 -- 9. Find duplicate salaries
+SELECT s.salary, count(s.salary) as Total
+FROM employees as e
+INNER JOIN salaries as s
+on e.emp_id = s.emp_id
+group by salary
+having count(s.salary) > 1;
 
 -- 10. Find employees who share the same salary
+SELECT e.name, s.salary
+FROM employees as e
+INNER JOIN salaries as s
+on e.emp_id = s.emp_id
+where salary in (select salary from salaries group by salary having count(salary) > 1) 
+order by salary;
+
+SELECT e1.name, s1.salary
+FROM employees as e1
+INNER JOIN salaries as s1
+on e1.emp_id = s1.emp_id
+INNER JOIN salaries as s2 on s1.salary = s2.salary
+INNER JOIN employees as e2 on s2.emp_id = e2.emp_id
+where e1.emp_id <> e2.emp_id;
 
 -- 11. Find department-wise average salary
 
