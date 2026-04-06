@@ -211,14 +211,45 @@ INNER JOIN employees as e2 on s2.emp_id = e2.emp_id
 where e1.emp_id <> e2.emp_id;
 
 -- 11. Find department-wise average salary
+select d.dept_name, avg(s.salary)
+from departments as d 
+inner join dept_emp as de
+on d.dept_id = de.dept_id
+inner join employees as e 
+on e.emp_id = de.emp_id
+inner join salaries as s
+on e.emp_id = s.emp_id
+group by dept_name;
 
 -- 12. Find department with highest average salary
-
+select d.dept_name, avg(s.salary) as Avg_Salary
+from departments as d 
+inner join dept_emp as de
+on d.dept_id = de.dept_id
+inner join employees as e 
+on e.emp_id = de.emp_id
+inner join salaries as s
+on e.emp_id = s.emp_id
+group by dept_name
+order by Avg_Salary desc
+limit 1;
 -- 13. Find employees who are not assigned to any department
+select e.emp_id, e.name, d.dept_name
+from employees as e
+Left Join dept_emp as de
+on e.emp_id = de.emp_id
+Left Join departments as d
+on de.dept_id = d.dept_id
+where d.dept_id is Null;
 
 -- 14. Find employees hired after 2021
+select * from employees
+where year(hire_date) > 2021;
 
 -- 15. Find number of employees hired each year
+select year(hire_date) as year, count(emp_id) as employees_hired from employees
+group by year(hire_date)
+order by year(hire_date);
 
 -- 16. Find third highest salary
 
