@@ -252,11 +252,55 @@ group by year(hire_date)
 order by year(hire_date);
 
 -- 16. Find third highest salary
+select * from salaries
+order by salary desc
+limit 2,1;
 
--- 17. Find employees with highest salary in each department
+-- 17. Find highest salary in each department
+select d.dept_name, max(s.salary)
+from employees as e
+inner join salaries as s
+on e.emp_id = s.emp_id
+inner join dept_emp as de
+on e.emp_id = de.emp_id
+inner join departments as d
+on de.dept_id = d.dept_id
+group by dept_name;
 
--- 18. Find employees whose salary is same as another employee
+-- 18 Find employees with highest salary in each department.
+SELECT e.name, d.dept_name, s.salary
+FROM employees AS e
+INNER JOIN salaries AS s ON e.emp_id = s.emp_id
+INNER JOIN dept_emp AS de ON e.emp_id = de.emp_id
+INNER JOIN departments AS d ON de.dept_id = d.dept_id
+WHERE s.salary = (
+SELECT MAX(s2.salary)
+    FROM employees AS e2
+    INNER JOIN salaries AS s2 ON e2.emp_id = s2.emp_id
+    INNER JOIN dept_emp AS de2 ON e2.emp_id = de2.emp_id
+    WHERE de2.dept_id = d.dept_id);
+    
+-- 19. Find employees whose salary is same as another employee
+select distinct e1.name, e1.emp_id, s1.salary
+from employees e1
+join salaries s1 on e1.emp_id = s1.emp_id
+join employees e2 on e1.emp_id <> e2.emp_id
+join salaries s2 on e2.emp_id = s2.emp_id
+where s1.salary = s2.salary
+order by salary;
 
 -- 19. Find departments having more than 3 employees
+select d.dept_name, count(e.emp_id) as Total_Employees
+from employees as e
+inner join dept_emp as de
+on e.emp_id = de.emp_id
+inner join departments as d
+on de.dept_id = d.dept_id
+group by dept_name
+having Total_Employees > 3;
 
 -- 20. Rank employees based on salary
+select e.emp_id, e.name, s.salary,
+rank() over (order by s.salary desc) as Salary_Rank
+from employees e
+join salaries s on e.emp_id = s.emp_id;
